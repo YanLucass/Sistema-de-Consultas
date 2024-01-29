@@ -1,0 +1,122 @@
+{
+   "openapi": "3.0.3",
+   "info": {
+      "title": "API para Site de uma Clínica",
+      "description": "Essa api tem como objetivo gerenciar um sistema de consultas online!",
+      "version": "1.0.0",
+      "contact": {
+         "name": "Yan Lucas",
+         "email": "yanlucascarvalho20@gmail.com"
+      }
+
+   },
+
+   "paths": {
+      "/patients": {
+         "post": {
+         "tags": ["Patients"],
+         "summary": "Cadastrar um paciente",
+         "description": "Essa rota cadastra um novo paciente",
+         "requestBody": {
+            "content": {
+               "application/json": {
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "name": {
+                           "type": "string"
+                        },
+
+                        "email": {
+                           "type": "string"
+                        },
+
+                        "cpf": {
+                           "type": "string"
+                        },
+
+                        "phone": {
+                           "type": "string"
+                        },
+
+                        "password": {
+                           "type": "string"
+                        },
+
+                        "confirmPassword": {
+                           "type": "string"
+                        }
+                     },
+                     "example": {
+                        "name": "Yan",
+                        "email": "yanlucascarvalho18@gmail.com",
+                        "cpf": "84433432105",
+                        "phone": "81993876323",
+                        "password": "234829453",
+                        "confirmPassword": "234829453"
+                     }
+
+                  }
+               }
+            }
+         },
+
+         "responses": {
+            "201": {
+               "description": "Novo paciente cadastrado",
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "message": {
+                              "type": "string"
+                           },
+
+                           "token": {
+                              "type": "string"
+                           },
+
+                           "userId": {
+                              "type": "string"
+                           }
+
+                        }
+                     },
+
+                     "example": {
+                        "message": "Você está autenticado",
+                         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiWWFuIiwiaWQiOiI4MTZkYTc2ZS1mZTk1LTQxZGYtODA2My0wYThiMjgyZjgxNzciLCJpYXQiOjE3MDYzMTExODh9.iBu07MhBMB37fty2qi5_xSHsbE-JRbdDKGakiVoB4hc",
+                        "userId": "816da76e-fe95-41df-8063-0a8b282f8177"
+}
+                     }
+                  }
+               },
+
+               "400": {
+                  "description": "Bad request.",
+                  "content": {
+                     "application/json": {
+                        "example": {
+                           "statusCode": 400,
+                           "error": "Bad Request",
+                           "message": "Validation failed",
+                           "validation": {
+                               "body": {
+                                   "source": "body",
+                                   "keys": [
+                                       "email"
+                                   ],
+                                   "message": "email is required"
+                               }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}
+

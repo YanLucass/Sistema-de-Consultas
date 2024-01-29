@@ -1,35 +1,19 @@
 import { Patients } from "@patients/entities/Patients";
 import { PostgresDataSource } from "@shared/typeorm";
 import { Repository } from "typeorm";
+//interface
+import { IPatientsRepository, PatientsCreateDTO } from "./IPatientsRepository";
 
-type PatientsCreateDTO = {
-   name: string;
-   email: string;
-   phone: string;
-   cpf: string;
-   password: string;
-};
-
-export class PatientsRepository {
+export class PatientsRepository implements IPatientsRepository {
    private patientsRepository: Repository<Patients>;
 
-   private static INSTANCE: PatientsRepository;
-
-   private constructor() {
+   public constructor() {
       //criar repositorio, apenas essa classe pode fazer isso.
       this.patientsRepository = PostgresDataSource.getRepository(Patients);
    }
 
-   //garantir instancia unica
-   public static getInstance(): PatientsRepository {
-      if (!this.INSTANCE) {
-         this.INSTANCE = new PatientsRepository();
-      }
-      return this.INSTANCE;
-   }
-
    //Create patient
-   async createPatient(patientData: PatientsCreateDTO): Promise<Patients> {
+   async createPatients(patientData: PatientsCreateDTO): Promise<Patients> {
       //the method create from typeorm create a instance from "patients"
       const patient = await this.patientsRepository.create(patientData);
       return this.patientsRepository.save(patient);

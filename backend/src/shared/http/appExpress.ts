@@ -1,12 +1,17 @@
 import express, { NextFunction, Request, Response } from "express";
 import "express-async-errors";
+import cors from "cors";
 import router from "./routes/index";
 
 import { errors } from "celebrate";
 import { AppError } from "@shared/errors/AppError";
+//container
+import "@shared/Container";
 
 const app = express();
 app.use(express.json());
+//define cors
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(router);
 //caso tenha algum erro na rota o middleware do celebrate erros entra em ação.
 app.use(errors());

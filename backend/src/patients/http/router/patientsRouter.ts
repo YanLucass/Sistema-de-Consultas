@@ -1,8 +1,11 @@
 import { Router } from "express";
-import { patientController } from "@patients/useCases/createPatient";
 import { Segments, celebrate, Joi } from "celebrate";
+import { container } from "tsyringe";
+import { CreatePatientsController } from "@patients/useCases/createPatient/CreatePatientController";
 
 const patientsRouter = Router();
+
+const createPatienteController = container.resolve(CreatePatientsController);
 
 patientsRouter.post(
    "/",
@@ -17,7 +20,7 @@ patientsRouter.post(
       }),
    }),
    (req, res) => {
-      return patientController.handle(req, res);
+      return createPatienteController.handle(req, res);
    },
 );
 

@@ -1,8 +1,13 @@
-import { app } from "./appExpress";
 import "reflect-metadata";
+import { app } from "./appExpress";
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "../../swagger.json";
 import "dotenv/config";
 
-//conectar o bd qnd o app iniciar
+//documentation url
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+//connect to bd
 import { PostgresDataSource } from "@shared/typeorm";
 
 const port = process.env.PORT || 5000;

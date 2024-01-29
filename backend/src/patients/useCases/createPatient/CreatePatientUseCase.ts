@@ -1,9 +1,10 @@
 import { Patients } from "@patients/entities/Patients";
-import { PatientsRepository } from "@patients/repositories/PatientsRepository";
+import { IPatientsRepository } from "@patients/repositories/IPatientsRepository";
 import { AppError } from "@shared/errors/AppError";
 
+import { inject, injectable } from "tsyringe";
 //bcrypt
-import bcrypt, { genSalt, hash } from "bcrypt";
+import bcrypt from "bcrypt";
 
 type createPatientsDTO = {
    name: string;
@@ -13,8 +14,10 @@ type createPatientsDTO = {
    password: string;
    confirmPassword: string;
 };
+
+@injectable()
 export class CreatePatientUseCase {
-   constructor(private patientsRepository: PatientsRepository) {}
+   constructor(@inject("PatientsRepository") private patientsRepository: IPatientsRepository) {}
 
    async execute({
       name,
@@ -24,17 +27,19 @@ export class CreatePatientUseCase {
       password,
       confirmPassword,
    }: createPatientsDTO): Promise<Patients> {
+      //check if email already in use
       const emailAlreadyUse = await this.patientsRepository.findUserByEmail(email);
       if (emailAlreadyUse) {
          throw new AppError("Esse email ja existe escolha outro", 422);
       }
 
+      //check if cpf already in use
       const cpfAlreadyInUse = await this.patientsRepository.findUserByCpf(cpf);
       if (cpfAlreadyInUse || cpf.length > 11) {
          throw new AppError("Esse cpf já está cadastrado no sistema ou não é um cpf valido", 422);
       }
 
-      //validar cpf
+      //check if password matchs with confirmPassword
       if (password != confirmPassword) {
          throw new AppError("As senhas devem ser iguais", 422);
       }
@@ -50,6 +55,6 @@ export class CreatePatientUseCase {
          password: hashedPassword,
       };
 
-      return this.patientsRepository.createPatient(patient);
+      return this.patientsRepository.createPatients(patient);
    }
 }
