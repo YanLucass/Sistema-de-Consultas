@@ -12,8 +12,8 @@ export function validarCPF(cpf: string): string | undefined {
       ac += parseInt(cpfWhioutVerifyDigit[i]) * (i + 1);
    }
 
-   //calcular primeiro digito
-   const firstDigit = ac % 11;
+   //calcular primeiro digito, caso o resto da divisão for 10, o digito é 0. Caso não é o resto que resultou.
+   const firstDigit = ac % 11 === 10 ? 0 : ac % 11;
    //cpf com o primeiro digito
    cpfFormed = cpfWhioutVerifyDigit + firstDigit;
    //zerar acumulador
@@ -24,8 +24,11 @@ export function validarCPF(cpf: string): string | undefined {
       ac += parseInt(cpfFormed[i]) * i;
    }
 
-   const secondDigit = ac % 11;
+   const secondDigit = ac % 11 === 10 ? 0 : ac % 11;
    cpfFormed += secondDigit;
+
+   console.log(formatedCpf);
+   console.log(cpfFormed);
 
    //Caso o cpf enviado for igual ao cpf gerado(que é um cpf valido) retorne esse cpf
    if (formatedCpf === cpfFormed) {
