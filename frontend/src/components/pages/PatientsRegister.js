@@ -1,5 +1,5 @@
 import api from '../../utils/api';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from '../form/Form.module.css'
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../form/Input';
 import useFlashMessage from '../../hooks/useFlashMessage';
 
+//context
+import Context from '../../context/UserContext'
 function PatientsRegister() {
 
     const [patient, setPatient] = useState({});
@@ -16,13 +18,15 @@ function PatientsRegister() {
 
     //navegation 
     const navigate = useNavigate();
+
+    const { createPatient } = useContext(Context);
+
+    //to fill in patient
     function onChange(e) {
         setPatient({...patient, [e.target.name]: e.target.value});
     }
 
-
-   
-
+    //submit patient data
     async function submit(e) {
         e.preventDefault();
         console.log(patient);

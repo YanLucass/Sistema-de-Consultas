@@ -17,9 +17,13 @@ import ShowPatients from './components/pages/ShowPatients';
 import MakeAppointment from './components/pages/MakeAppointment';
 import Scheduling from './components/pages/Scheduling';
 
+//context
+import { UserProvider } from './context/UserContext';
+
 function App() {
   return (
     <BrowserRouter>
+    <UserProvider>
     <NavBar />
     <Message />
       <Container>
@@ -31,6 +35,7 @@ function App() {
             <Route path = "/scheduling" element={<Scheduling/>} />
         </Routes>
       </Container>
+      </UserProvider>
     </BrowserRouter>
   );
 }
