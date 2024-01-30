@@ -29,9 +29,8 @@ function PatientsRegister() {
     //submit patient data
     async function submit(e) {
         e.preventDefault();
-        console.log(patient);
        await createPatient(patient);
-       navigate("/")
+     
     }   
 
    
