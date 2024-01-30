@@ -1,0 +1,44 @@
+/* Scheduling.module.css */
+
+.central {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  .shedules {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 300px;
+    text-align: left;
+  }
+  
+  .shedules h3 {
+    margin-bottom: 5px;
+  }
+  
+  .shedules span {
+    color: #555;
+    font-size: 14px;
+  }
+  
+  .shedules p {
+    margin: 10px 0;
+  }
+  
+  .shedules button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .shedules button:hover {
+    background-color: #c82333;
+  }
+  

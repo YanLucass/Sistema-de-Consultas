@@ -1,0 +1,32 @@
+/* ShowPatients.module.css */
+
+.central {
+    text-align: center;
+  }
+  
+  .patient {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .patientInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .patientInfo span {
+    margin-bottom: 5px;
+  }
+  
+  .patientInfo a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .patientInfo a:hover {
+    text-decoration: underline;
+  }
+  

@@ -6,6 +6,9 @@ import { inject, injectable } from "tsyringe";
 //bcrypt
 import bcrypt from "bcrypt";
 
+//helpers
+import { validarCPF } from "src/helpers/validaCPF";
+
 type createPatientsDTO = {
    name: string;
    email: string;
@@ -33,10 +36,19 @@ export class CreatePatientUseCase {
          throw new AppError("Esse email ja existe escolha outro", 422);
       }
 
+      //check if cpf is valid
+      const cpfIsValid = validarCPF(cpf);
+
+      if (!cpfIsValid) {
+         throw new AppError("Esse cpf é inválido! Insira um valido");
+      }
+
+      cpf = cpfIsValid;
+
       //check if cpf already in use
       const cpfAlreadyInUse = await this.patientsRepository.findUserByCpf(cpf);
-      if (cpfAlreadyInUse || cpf.length > 11) {
-         throw new AppError("Esse cpf já está cadastrado no sistema ou não é um cpf valido", 422);
+      if (cpfAlreadyInUse) {
+         throw new AppError("Esse cpf já está cadastrado no sistema", 422);
       }
 
       //check if password matchs with confirmPassword

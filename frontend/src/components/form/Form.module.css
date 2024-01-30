@@ -1,0 +1,43 @@
+/* Estilos para o componente Register */
+.register_container {
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1a445f;
+    border-radius: 20px;
+    color: white; 
+  }
+  
+  .register_container h1 {
+    color: var(--azul);
+    text-align: center;
+  }
+
+  .register_container p {
+    margin-top: 20px;
+  }
+  
+  .img {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+ 
+  }
+
+
+  .inputButton {
+    margin: 0 auto;
+    display: block;
+    width: 150px;
+    padding: 10px;
+    background-color: #c51b24;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.inputButton:hover {
+    background-color: #0056b3;
+}
