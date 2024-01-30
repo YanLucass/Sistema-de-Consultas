@@ -21,31 +21,13 @@ function PatientsRegister() {
     }
 
 
-    //create a new Patient. Consume api from route /patient/
-    async function createPatient(patient) {
-        let msgText = "Paciente cadastrado com sucesso!";
-        let msgType = 'success';
-
-        try {      
-            const response = await api.post('/patients/', patient);
-            navigate('/');
-        } catch (error) {
-            msgType = 'error'
-            if (error?.response?.data?.validation?.body?.message) {
-                msgText = error.response.data.validation.body.message;
-            } else if(error?.response?.data?.message) {
-                msgText = error.response.data.message;
-            } 
-            
-        }
-
-        setFlashMessage(msgText, msgType); 
-    }
+   
 
     async function submit(e) {
         e.preventDefault();
         console.log(patient);
        await createPatient(patient);
+       navigate("/")
     }   
 
    
