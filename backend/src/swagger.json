@@ -116,6 +116,37 @@
                }
             }
          }
+      },
+
+      "/login": {
+         "post": {
+            "tags": ["Login"],
+            "summary": "Fazer login",
+            "description": "User/Paciente pode fazer login no sistema para marcar consulta, visualizar etc",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "message": {
+                              "type": "string"
+                           },
+
+                           "token": {
+                              "type": "string"
+                           }
+                        },
+
+                        "example": {
+                           "message": "Você está autenticado",
+                           "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiWWFuIiwiaWQiOiI4MTZkYTc2ZS1mZTk1LTQxZGYtODA2My0wYThiMjgyZjgxNzciLCJpYXQiOjE3MDYzMTExODh9.iBu07MhBMB37fty2qi5_xSHsbE-JRbdDKGakiVoB4hc"
+                        }
+                     }
+                  }
+               }
+            }
+         }
       }
    }
 }
