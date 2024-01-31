@@ -27,9 +27,6 @@ export function validarCPF(cpf: string): string | undefined {
    const secondDigit = ac % 11 === 10 ? 0 : ac % 11;
    cpfFormed += secondDigit;
 
-   console.log(formatedCpf);
-   console.log(cpfFormed);
-
    //Caso o cpf enviado for igual ao cpf gerado(que é um cpf valido) retorne esse cpf
    if (formatedCpf === cpfFormed) {
       return cpfFormed;

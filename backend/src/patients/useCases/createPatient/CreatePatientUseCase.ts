@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 
 //helpers
 import { validarCPF } from "src/helpers/validaCPF";
+import { validEmail } from "src/helpers/validEmail";
 
 type createPatientsDTO = {
    name: string;
@@ -30,10 +31,22 @@ export class CreatePatientUseCase {
       password,
       confirmPassword,
    }: createPatientsDTO): Promise<Patients> {
+      //check if email is valid
+      if (!validEmail(email)) {
+         throw new AppError("Escolha um email válido!", 422);
+      }
       //check if email already in use
       const emailAlreadyUse = await this.patientsRepository.findUserByEmail(email);
       if (emailAlreadyUse) {
          throw new AppError("Esse email ja existe escolha outro", 422);
+      }
+
+      //check if passwor dis valid
+      const passwordRegex = /^(?=.*[a-z]).{6,}$/;
+      const isValidPassword = passwordRegex.test(password);
+
+      if (!isValidPassword) {
+         throw new AppError("A senha deve ter pelo menos 6 digitos e uma letra minuscula", 422);
       }
 
       //check if cpf is valid
