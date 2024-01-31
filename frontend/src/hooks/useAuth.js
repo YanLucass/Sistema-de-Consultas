@@ -44,14 +44,35 @@ export default function useAuth() {
     setFlashMessage(msgText, msgType); 
 }
 
+    //login
+    async function login(user) {
+        let msgText = 'Login realizado com sucesso'
+        let msgType = 'success'
 
-//insert into localstorage the token from response.data
-async function insertTokenData(data) {
-    setAuthenticated(true);
-    let teste = localStorage.setItem('token', JSON.stringify(data.token));
-    localStorage.setItem('token', JSON.stringify(data.token));
-    navigate("/");
-}
+        try {
+           const response = await api.post('/login', user)
+           const data = response.data;
+           await insertTokenData(data)
+        } catch (error) {
+            msgType = 'error'
+            if(error?.response?.data?.validation?.body?.message) {
+                msgText = error.response.data.validation.body.message;
+            } else if(error?.response?.data?.message) {
+                msgText = error.response.data.message;
+            }
+        }
 
-    return { authenticated, createPatient }
+        setFlashMessage(msgText, msgType);
+    }
+
+
+    //insert into localstorage the token from response.data
+    async function insertTokenData(data) {
+        setAuthenticated(true);
+         let teste = localStorage.setItem('token', JSON.stringify(data.token));
+        localStorage.setItem('token', JSON.stringify(data.token));
+        navigate("/");
+    }
+
+    return { authenticated, createPatient, login }
 }

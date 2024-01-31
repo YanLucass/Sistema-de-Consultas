@@ -16,6 +16,7 @@ import NavBar from './components/layout/NavBar';
 import ShowPatients from './components/pages/ShowPatients';
 import MakeAppointment from './components/pages/MakeAppointment';
 import Scheduling from './components/pages/Scheduling';
+import Login from './components/pages/Login';
 
 //context
 import { UserProvider } from './context/UserContext';
@@ -33,6 +34,7 @@ function App() {
             <Route path = "/showPatients" element={<ShowPatients />} />
             <Route path = "/make/appointment/:id" element={<MakeAppointment />} />
             <Route path = "/scheduling" element={<Scheduling/>} />
+            <Route path = "/login" element={<Login />} />
         </Routes>
       </Container>
       </UserProvider>

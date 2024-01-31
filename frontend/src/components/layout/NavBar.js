@@ -2,9 +2,11 @@
 import { Link } from "react-router-dom"
 import styles from './NavBar.module.css';
 import logo from '../../assets/images/doisUnidos.png'
-
+import { useContext } from "react";
+import Context from "../../context/UserContext";
 
 function NavBar() {
+  const { authenticated } = useContext(Context)
     return (
         <nav id={styles.navbar}>
         <Link to="/" id={styles.logo}>
@@ -12,11 +14,24 @@ function NavBar() {
         </Link>
   
         <ul>
+          {authenticated ? (
+            <>
+            <li><Link to = '/showPatients'>Marcar consulta</Link></li>
+            <li><Link to = '/scheduling'>Cancelar consulta</Link></li>
+            </>
+          )
+
+          :
+          (
+            <>
+            <li>
+              <Link to="/patients/register">Cadastrar paciente</Link>
+            </li>
           <li>
-            <Link to="/patients/register">Cadastrar paciente</Link>
+             <Link to="/login">Login</Link>
           </li>
-          <li><Link to = '/showPatients'>Marcar consulta</Link></li>
-          <li><Link to = '/scheduling'>Cancelar consulta</Link></li>
+          </>
+          )}
         </ul>
     </nav>
     )
