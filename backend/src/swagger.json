@@ -266,6 +266,50 @@
                      }
                   }
                }
+            },
+
+
+            "responses": {
+               "201": {
+                  "description": "Nova consulta agendada",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties": {
+                              "date": {
+                                 "type": "string"
+                              },
+
+                              "hour": {
+                                 "type": "string"
+                              },
+
+                              "description": {
+                                 "type": "string"
+                              },
+
+                              "patientId": {
+                                 "type": "string"
+                              }
+
+                        }
+                     },
+
+                     "example": {
+                        "message": "Novo agendamento registrado com sucesso",
+                        "newSchedule": {
+                        "id": "23c58764-b862-48b4-b0e4-4aa5fe3a98b2",
+                        "date": "2024-04-08",
+                        "hour": "13:00",
+                        "description": "Dermatologista com Henrique",
+                        "patientId": "ccc9e97e-63dd-4a47-9b13-5bd44add5983"
+                     }
+                  }
+                  }
+               }
+
+               }
             }
          }
       }
