@@ -15,7 +15,7 @@ schedulesRouter.post(
          date: Joi.string().required(),
          hour: Joi.string().required(),
          description: Joi.string().required(),
-         patientId: Joi.number().required(),
+         patientId: Joi.string().required(),
       }),
    }),
    //check if the token is present and valid middleware

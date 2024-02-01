@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryColumn } from "typeorm";
+import { v4 as uuidv4 } from "uuid";
 
 @Entity("schedules")
 export class Schedules {
-   @PrimaryGeneratedColumn("uuid")
+   @PrimaryColumn("uuid")
    id: string;
 
    @Column()
@@ -15,9 +16,13 @@ export class Schedules {
    description: string;
 
    @Column()
-   patientId: number;
+   patientId: string;
 
    constructor(date: string, hour: string, description: string) {
+      //to generate id
+      if (!this.id) {
+         this.id = uuidv4();
+      }
       this.date = date;
       this.hour = hour;
       this.description = description;
