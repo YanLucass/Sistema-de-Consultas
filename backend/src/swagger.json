@@ -129,19 +129,140 @@
                      "schema": {
                         "type": "object",
                         "properties": {
-                           "message": {
+                           "email": {
                               "type": "string"
                            },
 
-                           "token": {
+                           "senha": {
                               "type": "string"
                            }
                         },
 
                         "example": {
-                           "message": "Você está autenticado",
-                           "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiWWFuIiwiaWQiOiI4MTZkYTc2ZS1mZTk1LTQxZGYtODA2My0wYThiMjgyZjgxNzciLCJpYXQiOjE3MDYzMTExODh9.iBu07MhBMB37fty2qi5_xSHsbE-JRbdDKGakiVoB4hc"
+                           "email": "yanlucascarvalho20@gmail.com",
+                           "password": "832904y"
                         }
+                     }
+                  }
+               }
+            },
+
+            "responses": {
+
+               "200": {
+                  "description": "OK",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                            "properties": {
+                              "message": {
+                                 "type": "string"
+                              },
+
+                              "token": {
+                                 "type": "string"
+                              },
+
+                              "userId": {
+                                 "type": "string"
+                              }
+                            }
+                        },
+
+                        "example": {
+                           "message": "Você está autenticado",
+                           "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuamkiLCJpZCI6ImNjYzllOTdlLTYzZGQtNGE0Ny05YjEzLTViZDQ0YWRkNTk4MyIsImlhdCI6MTcwNjgxOTQ4NX0.r0EeaGz5m5-8OeMZcnTpxAoZBh4XCAcrwXxXvTkjw64",
+                           "userId": "ccc9e97e-63dd-4a47-9b13-5bd44add5983"
+                        }
+                     }
+                  }
+            },
+               "422": {
+                  "description": "Senha incorreta",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                            "properties": {
+                              "status": {
+                                 "type": "string"
+                              },
+
+                              "message": {
+                                 "type": "string"
+                              }
+                            }
+                        },
+
+                        "example": {
+                           "status": "error",
+                           "message": "Senha incorreta!"
+                        }
+                     }
+                  }
+               },
+
+               "400": {
+                  "description": "Bad request.",
+                  "content": {
+                     "application/json": {
+                        "example": {
+                           "statusCode": 400,
+                           "error": "Bad Request",
+                           "message": "Validation failed",
+                           "validation": {
+                              "body": {
+                                 "source": "body",
+                                 "keys": [
+                                    "email"
+                                 ],
+                                 "message": "email is required"
+                              }
+                           }
+
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+
+      "/schedules/makeAppointment": {
+         "post": {
+            "tags": ["Schedules"],
+            "summary": "Marcar consulta",
+            "description": "Essa rota é responsável pela marcação de consultas definindo data e hora",
+            "requestBody": {
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "date": {
+                              "type": "string"
+                           },
+
+                           "hour": {
+                              "type": "string"
+                           },
+
+                           "description": {
+                              "type": "string"
+                           },
+
+                           "patientId": {
+                              "type": "string"
+                           }
+                        }
+                     },
+
+                     "example": {
+                        "date": "2024-03-08",
+                        "hour": "13:00",
+                        "description": "Dermatologista com Henrique",
+                        "patientId": "ccc9e97e-63dd-4a47-9b13-5bd44add5983"
                      }
                   }
                }
