@@ -1,4 +1,5 @@
 import { MakeAppointmentController } from "@schedules/usesCases/MakeAppointment/MakeAppointmentController";
+import { PatientsAppointmentsController } from "@schedules/usesCases/PatientsAppointment/PatientsAppointmentsController";
 //celebrete
 import { Segments, celebrate, Joi } from "celebrate";
 import { Router } from "express";
@@ -7,7 +8,9 @@ const schedulesRouter = Router();
 import { container } from "tsyringe";
 //controllers
 const makeAppointmentController = container.resolve(MakeAppointmentController);
+const patientsAppointmentsController = container.resolve(PatientsAppointmentsController);
 
+//make a appointment router
 schedulesRouter.post(
    "/makeAppointment",
    celebrate({
@@ -24,5 +27,10 @@ schedulesRouter.post(
       return makeAppointmentController.handle(req, res);
    },
 );
+
+//get individuals patient appoitnments
+schedulesRouter.get("/patientAppointments", verifyToken, (req, res) => {
+   return patientsAppointmentsController.handle(req, res);
+});
 
 export default schedulesRouter;

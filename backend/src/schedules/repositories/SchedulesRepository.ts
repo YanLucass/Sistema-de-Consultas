@@ -18,4 +18,9 @@ export class SchedulesRepository implements ISchedulesRepository {
    async getAppointmentWithDateAndHour(date: string, hour: string): Promise<Schedules> {
       return this.scheduleRepository.findOneBy({ date, hour });
    }
+
+   //find all appointments of patients
+   async getAllPatientsAppointments(id: string): Promise<Schedules[] | null> {
+      return this.scheduleRepository.find({ where: { patientId: id } });
+   }
 }
