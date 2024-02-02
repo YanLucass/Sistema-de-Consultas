@@ -20,11 +20,16 @@ export class PatientsRepository implements IPatientsRepository {
    }
 
    //find user by email
-   async findUserByEmail(email: string): Promise<Patients | undefined> {
+   async findUserByEmail(email: string): Promise<Patients | null> {
       return this.patientsRepository.findOneBy({ email });
    }
    //find by cpf
-   async findUserByCpf(cpf: string): Promise<Patients> {
+   async findUserByCpf(cpf: string): Promise<Patients | null> {
       return this.patientsRepository.findOneBy({ cpf });
+   }
+
+   //find by id
+   async findUserById(id: string): Promise<Patients | null> {
+      return this.patientsRepository.findOneBy({ id });
    }
 }

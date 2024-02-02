@@ -1,9 +1,14 @@
+import { PatientsRepository } from "@patients/repositories/PatientsRepository";
 import jwt from "jsonwebtoken";
-export const getUserByToken = function (res, token) {
+import { container } from "tsyringe";
+
+const patientsRepository = container.resolve(PatientsRepository);
+export const getUserByToken = async function (res, token) {
    if (!token) {
       return res.status(401).json({ message: "Acesso negado" });
    }
 
    const decodedUser = jwt.verify(token, process.env.SECRET);
-   return decodedUser.id;
+   const user = await patientsRepository.findUserById(decodedUser.id);
+   return user;
 };

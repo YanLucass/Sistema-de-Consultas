@@ -16,7 +16,7 @@ function NavBar() {
         <ul>
           {authenticated ? (
             <>
-            <li><Link to = '/showPatients'>Marcar consulta</Link></li>
+            <li><Link to = '/make/appointment'>Marcar consulta</Link></li>
             <li><Link to = '/scheduling'>Cancelar consulta</Link></li>
             </>
           )

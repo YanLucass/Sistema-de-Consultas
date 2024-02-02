@@ -10,14 +10,14 @@ export class MakeAppointmentController {
       //get token
       const token = getToken(req);
       //get patientId from object user
-      const patientId = getUserByToken(res, token);
+      const user = await getUserByToken(res, token);
 
       const { date, hour, description } = req.body;
       const newSchedule = await makeAppointmentUseCase.execute({
          date,
          hour,
          description,
-         patientId,
+         patientId: user.id,
       });
 
       return res

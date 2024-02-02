@@ -12,4 +12,5 @@ export interface IPatientsRepository {
    createPatients(patientData: PatientsCreateDTO): Promise<Patients>;
    findUserByEmail(email: string): Promise<Patients | null>;
    findUserByCpf(cpf: string): Promise<Patients | null>;
+   findUserById(id: string): Promise<Patients | null>;
 }
