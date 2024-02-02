@@ -77,7 +77,6 @@ function MakeAppointment() {
         //add patientId to appointment
         //add patient id to appointment
         setAppointment({...appointment, 'patientId': patient.id})
-        console.log(appointment);
         scheduleAppointment();
     }
     
