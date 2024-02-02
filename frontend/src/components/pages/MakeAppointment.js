@@ -41,6 +41,9 @@ function MakeAppointment() {
         })
         .then(response => {
             setPatient(response.data.user)
+            //add 'patientId' in appointment 
+            setAppointment({...appointment, 'patientId': response.data.user.id})
+
         })
         .catch(err => {
             console.log('Deu erro ao pegar usuario atual', err);
@@ -72,11 +75,9 @@ function MakeAppointment() {
         setFlashMessage(msgText, msgType);
     }
 
-    function submit(e) {
+   function submit(e) {
         e.preventDefault();
         //add patientId to appointment
-        //add patient id to appointment
-        setAppointment({...appointment, 'patientId': patient.id})
         scheduleAppointment();
     }
     
