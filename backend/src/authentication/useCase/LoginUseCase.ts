@@ -25,7 +25,7 @@ export class LoginUseCase {
          throw new AppError("Insira um email válido", 422);
       }
       //check if user with email exits
-      const user = await this.patientsRepository.findUserByEmail(email);
+      const user = await this.patientsRepository.findPatientByEmail(email);
       if (!user) {
          throw new AppError("Não existe usuario com esse email", 422);
       }
