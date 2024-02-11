@@ -8,7 +8,7 @@ export class PatientsRepository implements IPatientsRepository {
    private patientsRepository: Repository<Patients>;
 
    public constructor() {
-      //criar repositorio, apenas essa classe pode fazer isso.
+      //create repository
       this.patientsRepository = PostgresDataSource.getRepository(Patients);
    }
 
@@ -20,16 +20,16 @@ export class PatientsRepository implements IPatientsRepository {
    }
 
    //find user by email
-   async findUserByEmail(email: string): Promise<Patients | null> {
+   async findPatientByEmail(email: string): Promise<Patients | null> {
       return this.patientsRepository.findOneBy({ email });
    }
    //find by cpf
-   async findUserByCpf(cpf: string): Promise<Patients | null> {
+   async findPatientByCpf(cpf: string): Promise<Patients | null> {
       return this.patientsRepository.findOneBy({ cpf });
    }
 
    //find by id
-   async findUserById(id: string): Promise<Patients | null> {
+   async findPatientById(id: string): Promise<Patients | null> {
       return this.patientsRepository.findOneBy({ id });
    }
 }

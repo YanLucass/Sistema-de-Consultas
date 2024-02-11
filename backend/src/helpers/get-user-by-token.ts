@@ -9,6 +9,6 @@ export const getUserByToken = async function (res, token) {
    }
 
    const decodedUser = jwt.verify(token, process.env.SECRET);
-   const user = await patientsRepository.findUserById(decodedUser.id);
+   const user = await patientsRepository.findPatientById(decodedUser.id);
    return user;
 };

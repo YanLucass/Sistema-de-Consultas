@@ -6,7 +6,7 @@ import { useContext } from "react";
 import Context from "../../context/UserContext";
 
 function NavBar() {
-  const { authenticated } = useContext(Context)
+  const { authenticated, logout } = useContext(Context)
     return (
         <nav id={styles.navbar}>
         <Link to="/" id={styles.logo}>
@@ -19,6 +19,7 @@ function NavBar() {
             <li><Link to = '/make/appointment'>Marcar consulta</Link></li>
             <li><Link to='/patients/appointments'> Minhas consultas </Link> </li>
             <li><Link to = '/scheduling'>Cancelar consulta</Link></li>
+            <li onClick={logout}>Logout</li>
             </>
           )
 

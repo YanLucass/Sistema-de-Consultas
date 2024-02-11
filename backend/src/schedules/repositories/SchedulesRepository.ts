@@ -5,15 +5,17 @@ import { PostgresDataSource } from "@shared/typeorm";
 
 export class SchedulesRepository implements ISchedulesRepository {
    private scheduleRepository: Repository<Schedules>;
+
    constructor() {
       this.scheduleRepository = PostgresDataSource.getRepository(Schedules);
    }
 
    //save appointment method
    async saveAppointment(schedule: ScheduleDTO): Promise<Schedules> {
-      const newSchedule = await this.scheduleRepository.create(schedule);
+      const newSchedule = this.scheduleRepository.create(schedule);
       return this.scheduleRepository.save(newSchedule);
    }
+
    //return appointment with a date and hour
    async getAppointmentWithDateAndHour(date: string, hour: string): Promise<Schedules> {
       return this.scheduleRepository.findOneBy({ date, hour });

@@ -65,6 +65,25 @@ export default function useAuth() {
         setFlashMessage(msgText, msgType);
     }
 
+    //logout function
+    async function logout() {
+        let msgText = 'Logout realizado com sucesso. Se Cuide!';
+        let msgType = 'success';
+        try {
+            //deslog and remove token
+            setAuthenticated(false);
+            localStorage.removeItem('token');
+            //to remove token from instace of api
+            api.defaults.headers.Authorization = undefined;
+            navigate('/login');
+        } catch (error) {
+            msgText = error.response.data.message;
+            msgType = 'error';
+        }
+
+        setFlashMessage(msgText, msgType);
+    }
+
 
     //insert into localstorage the token from response.data
     async function insertTokenData(data) {
@@ -74,5 +93,5 @@ export default function useAuth() {
         navigate("/");
     }
 
-    return { authenticated, createPatient, login }
+    return { authenticated, createPatient, login, logout }
 }

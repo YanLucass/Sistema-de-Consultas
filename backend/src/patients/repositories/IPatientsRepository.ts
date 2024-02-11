@@ -10,7 +10,7 @@ export type PatientsCreateDTO = {
 
 export interface IPatientsRepository {
    createPatients(patientData: PatientsCreateDTO): Promise<Patients>;
-   findUserByEmail(email: string): Promise<Patients | null>;
-   findUserByCpf(cpf: string): Promise<Patients | null>;
-   findUserById(id: string): Promise<Patients | null>;
+   findPatientByEmail(email: string): Promise<Patients | null>;
+   findPatientByCpf(cpf: string): Promise<Patients | null>;
+   findPatientById(id: string): Promise<Patients | null>;
 }

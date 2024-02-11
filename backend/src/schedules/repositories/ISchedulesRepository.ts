@@ -1,11 +1,12 @@
+import { Patients } from "@patients/entities/Patients";
 import { Schedules } from "../entities/Schedules";
 
-//define schedule schema
+//define schedule schema to save in bd
 export type ScheduleDTO = {
    date: string;
    hour: string;
    description: string;
-   patientId: string;
+   patient: Patients;
 };
 export interface ISchedulesRepository {
    saveAppointment(schedule: ScheduleDTO): Promise<Schedules>;

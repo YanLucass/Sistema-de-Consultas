@@ -9,10 +9,11 @@ export class MakeAppointmentController {
       const makeAppointmentUseCase = container.resolve(MakeAppointmentUseCase);
       //get token
       const token = getToken(req);
-      //get patientId from object user
+      //to get patientId from object user
       const user = await getUserByToken(res, token);
 
       const { date, hour, description } = req.body;
+
       const newSchedule = await makeAppointmentUseCase.execute({
          date,
          hour,

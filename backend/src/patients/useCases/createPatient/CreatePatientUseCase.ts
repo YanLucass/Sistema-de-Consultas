@@ -36,7 +36,7 @@ export class CreatePatientUseCase {
          throw new AppError("Escolha um email válido!", 422);
       }
       //check if email already in use
-      const emailAlreadyUse = await this.patientsRepository.findUserByEmail(email);
+      const emailAlreadyUse = await this.patientsRepository.findPatientByEmail(email);
       if (emailAlreadyUse) {
          throw new AppError("Esse email ja existe escolha outro", 422);
       }
@@ -59,7 +59,7 @@ export class CreatePatientUseCase {
       cpf = cpfIsValid;
 
       //check if cpf already in use
-      const cpfAlreadyInUse = await this.patientsRepository.findUserByCpf(cpf);
+      const cpfAlreadyInUse = await this.patientsRepository.findPatientByCpf(cpf);
       if (cpfAlreadyInUse) {
          throw new AppError("Esse cpf já está cadastrado no sistema", 422);
       }

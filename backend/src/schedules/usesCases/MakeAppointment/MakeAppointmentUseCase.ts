@@ -1,12 +1,25 @@
+import { IPatientsRepository } from "@patients/repositories/IPatientsRepository";
 import { AppError } from "@shared/errors/AppError";
 import { checkIfDateIsRetroactive } from "src/helpers/checkIfDateIsReatroative";
-import { ISchedulesRepository, ScheduleDTO } from "src/schedules/repositories/ISchedulesRepository";
+import { ISchedulesRepository } from "src/schedules/repositories/ISchedulesRepository";
 import { inject, injectable } from "tsyringe";
 
+//define dto to make an appointment with patientID
+type ServiceMakeAppointmentDTO = {
+   date: string;
+   hour: string;
+   description: string;
+   patientId: string;
+};
 @injectable()
 export class MakeAppointmentUseCase {
-   constructor(@inject("SchedulesRepository") private schedulesRepository: ISchedulesRepository) {}
-   async execute({ date, hour, description, patientId }: ScheduleDTO) {
+   constructor(
+      //get repositories
+      @inject("SchedulesRepository") private schedulesRepository: ISchedulesRepository,
+      @inject("PatientsRepository") private patientsRepository: IPatientsRepository,
+   ) {}
+
+   async execute({ date, hour, description, patientId }: ServiceMakeAppointmentDTO) {
       //validations
 
       //check if date is retroactive
@@ -24,12 +37,15 @@ export class MakeAppointmentUseCase {
          throw new AppError("Já existe uma consulta para esse dia / horário, tente outro.", 422);
       }
 
+      //pick up the patient for the schedules enitity
+      const patient = await this.patientsRepository.findPatientById(patientId);
+
       //create obj schedule to create a new.
       const schedule = {
          date,
          hour,
          description,
-         patientId,
+         patient,
       };
 
       return this.schedulesRepository.saveAppointment(schedule);

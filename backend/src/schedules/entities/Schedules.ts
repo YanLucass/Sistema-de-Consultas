@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Patients } from "@patients/entities/Patients";
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
 
 @Entity("schedules")
@@ -15,8 +16,10 @@ export class Schedules {
    @Column()
    description: string;
 
-   @Column()
-   patientId: string;
+   @ManyToOne(() => Patients, {
+      cascade: true,
+   })
+   patient: Patients;
 
    constructor(date: string, hour: string, description: string) {
       //to generate id
