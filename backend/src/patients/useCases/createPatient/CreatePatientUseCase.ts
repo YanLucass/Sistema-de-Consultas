@@ -69,6 +69,7 @@ export class CreatePatientUseCase {
          throw new AppError("As senhas devem ser iguais", 422);
       }
 
+      //create password
       const salt = await bcrypt.genSalt(12);
       const hashedPassword = await bcrypt.hash(password, salt);
 

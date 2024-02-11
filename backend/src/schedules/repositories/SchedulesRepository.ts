@@ -23,6 +23,6 @@ export class SchedulesRepository implements ISchedulesRepository {
 
    //find all appointments of patients
    async getAllPatientsAppointments(id: string): Promise<Schedules[] | null> {
-      return this.scheduleRepository.find({ where: { patientId: id } });
+      return this.scheduleRepository.find({ where: { patient: { id: id } } });
    }
 }
