@@ -312,7 +312,57 @@
                }
             }
          }
-      }
+      },
+
+      "/schedules/cancelAppointment/{id}": {
+         "delete": {
+           "tags": ["Schedules"],
+           "summary": "Cancelar uma consulta",
+           "parameters": [
+             {
+               "name": "id",
+               "in": "path",
+               "description": "Indentificar uma consulta",
+               "required": true,
+               "schema": {
+                 "type": "string"
+               },
+               "style": "label"
+             }
+           ],
+           "security": [
+             {
+               "BearerAuth": []
+             }
+           ],
+           "responses": {
+             "200": {
+               "description": "Consulta desmarcada"
+             },
+             "400": {
+               "description": "Bad request."
+             },
+             "401": {
+               "description": "Error: Unauthorized"
+             },
+             "404": {
+               "description": "Essa consulta não existe ou foi removida"
+             }
+           }
+         }
+       }
+     },
+     "components": {
+       "securitySchemes": {
+         "BearerAuth": {
+           "type": "http",
+           "scheme": "bearer",
+           "bearerFormat": "JWT"
+         }
+       }
+     }
+
    }
-}
+
+
 
