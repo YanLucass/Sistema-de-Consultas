@@ -9,7 +9,6 @@ export default function useAuth() {
     const { setFlashMessage } = useFlashMessage();
     const navigate = useNavigate();
 
-
     //To deal with protected routes, if you have a token in localStorage, we will change the default API Authorization to always pass
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -88,7 +87,6 @@ export default function useAuth() {
     //insert into localstorage the token from response.data
     async function insertTokenData(data) {
         setAuthenticated(true);
-         let teste = localStorage.setItem('token', JSON.stringify(data.token));
         localStorage.setItem('token', JSON.stringify(data.token));
         navigate("/");
     }

@@ -13,51 +13,58 @@ import useFlashMessage from '../../hooks/useFlashMessage';
 import Context from '../../context/UserContext';
 
 function MakeAppointment() {
-  const [appointment, setAppointment] = useState({});
-  // Para armazenar o paciente atualmente logado
-  const [patient, setPatient] = useState({});
-
-  // Obter autenticação para proteger a rota
   const { authenticated } = useContext(Context);
-
-  // Obter token
-  const [token] = useState(localStorage.getItem('token') || '');
-
-  const { id } = useParams();
   const navigate = useNavigate();
 
-  // Mensagem flash
+  // Redirect to login page if not authenticated
+  if (!authenticated) {
+    navigate('/login');
+  }
+
+  const [appointment, setAppointment] = useState({});
+  // To store the currently logged-in patient
+  const [patient, setPatient] = useState({});
+  // Get token
+  const storedToken = localStorage.getItem('token');
+  const [token] = useState(storedToken ? JSON.parse(storedToken) : '');
+  // Check authentication to protect the route
+
+  useEffect(() => {
+    // Check authentication before doing anything else
+    if (!authenticated) {
+      navigate('/login');
+      return; // Stop execution if not authenticated
+    }
+  });
+
+  // Flash message
   const { setFlashMessage } = useFlashMessage();
 
+  // Handle input changes
   function onChange(e) {
     setAppointment({ ...appointment, [e.target.name]: e.target.value });
   }
 
-  // Obter dados do paciente atual se o usuário estiver logado.
+  // Fetch current patient data if the user is logged in
   useEffect(() => {
-    if (!authenticated) {
-      navigate('/login');
-    } else {
-      api
-        .get('/patients/getCurrentPatient', {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(token)}`,
-          },
-        })
-        .then((response) => {
-          setPatient(response.data.user);
-          // Adicionar 'patientId' em 'appointment'
-          setAppointment({ ...appointment, patientId: response.data.user.id });
-        })
-        .catch((err) => {
-          console.log('Deu erro ao pegar o usuário atual', err);
-        });
-    }
+    api.get('/patients/getCurrentPatient', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response) => {
+      setPatient(response.data.user);
+      // Add 'patientId' to 'appointment'
+      setAppointment({ ...appointment, patientId: response.data.user.id });
+    })
+    .catch((err) => {
+      console.log('Error fetching current user', err);
+    });
   }, [token]);
 
-  // Consumir a API para agendar uma consulta
+  // Consume the API to schedule an appointment
   async function scheduleAppointment() {
-    let msgText = 'Consulta agendada com sucesso!';
+    let msgText = 'Appointment scheduled successfully!';
     let msgType = 'success';
     try {
       const response = await api.post(
@@ -65,10 +72,12 @@ function MakeAppointment() {
         appointment,
         {
           headers: {
-            Authorization: `Bearer ${JSON.parse(token)}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
+
+      navigate('/patients/appointments');
     } catch (error) {
       msgType = 'error';
       if (error?.response?.data?.validation?.body?.message) {
@@ -81,18 +90,18 @@ function MakeAppointment() {
     setFlashMessage(msgText, msgType);
   }
 
+  // Handle form submission
   function submit(e) {
     e.preventDefault();
-    // Adicionar 'patientId' à consulta
     scheduleAppointment();
   }
 
   return (
     <div>
-      <h2>Marque a consulta:</h2>
+      <h2>Schedule appointment:</h2>
       <Input
         type="date"
-        text="Data"
+        text="Date"
         id="date"
         name="date"
         handleOnChange={onChange}
@@ -100,7 +109,7 @@ function MakeAppointment() {
 
       <Input
         type="time"
-        text="Hora"
+        text="Time"
         id="hour"
         name="hour"
         handleOnChange={onChange}
@@ -108,13 +117,13 @@ function MakeAppointment() {
 
       <Input
         type="text"
-        text="Descrição"
+        text="Description"
         id="description"
         name="description"
         handleOnChange={onChange}
       />
 
-      <input type="submit" value="Agendar" onClick={submit} />
+      <input type="submit" value="Schedule" onClick={submit} />
     </div>
   );
 }
