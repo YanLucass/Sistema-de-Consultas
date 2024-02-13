@@ -1,6 +1,6 @@
 /dist
 /node_modules
-/src/shared/typeorm/index.ts
+
 
 # Logs
 logs
