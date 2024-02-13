@@ -1,3 +1,4 @@
+import { CancelAppointmentController } from "@schedules/usesCases/CancelAppointment/CancelAppointmentController";
 import { MakeAppointmentController } from "@schedules/usesCases/MakeAppointment/MakeAppointmentController";
 import { PatientsAppointmentsController } from "@schedules/usesCases/PatientsAppointment/PatientsAppointmentsController";
 //celebrete
@@ -9,6 +10,10 @@ import { container } from "tsyringe";
 //controllers
 const makeAppointmentController = container.resolve(MakeAppointmentController);
 const patientsAppointmentsController = container.resolve(PatientsAppointmentsController);
+const cancelAppointmentController = container.resolve(CancelAppointmentController);
+
+//check if the token is present and valid middleware
+schedulesRouter.use(verifyToken);
 
 //make a appointment router
 schedulesRouter.post(
@@ -21,16 +26,27 @@ schedulesRouter.post(
          patientId: Joi.string().required(),
       }),
    }),
-   //check if the token is present and valid middleware
-   verifyToken,
    (req, res) => {
       return makeAppointmentController.handle(req, res);
    },
 );
 
 //get individuals patient appoitnments
-schedulesRouter.get("/patientAppointments", verifyToken, (req, res) => {
+schedulesRouter.get("/patientAppointments", (req, res) => {
    return patientsAppointmentsController.handle(req, res);
 });
+
+//cancel patient appointment
+schedulesRouter.delete(
+   "/cancelAppointment/:id",
+   celebrate({
+      [Segments.PARAMS]: Joi.object().keys({
+         id: Joi.string().uuid().required(),
+      }),
+   }),
+   (req, res) => {
+      return cancelAppointmentController.handle(req, res);
+   },
+);
 
 export default schedulesRouter;

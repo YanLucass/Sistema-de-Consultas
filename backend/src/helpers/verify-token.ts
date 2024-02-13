@@ -22,11 +22,9 @@ export const verifyToken = (req, res, next: NextFunction) => {
    // Tries to decode the token to obtain user information.
    try {
       const decodedUser = jwt.verify(token, process.env.SECRET);
-      console.log(decodedUser);
 
       // Adds user information to the request object (req).
       req.user = decodedUser;
-      console.log(req);
 
       // Proceeds to the next middleware or route.
       next();

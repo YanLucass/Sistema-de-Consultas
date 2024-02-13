@@ -12,4 +12,6 @@ export interface ISchedulesRepository {
    saveAppointment(schedule: ScheduleDTO): Promise<Schedules>;
    getAppointmentWithDateAndHour(date: string, hour: string): Promise<Schedules>;
    getAllPatientsAppointments(id: string): Promise<Schedules[] | null>;
+   findScheduleById(id: string): Promise<Schedules | null>;
+   cancelPatientAppointment(schedule: Schedules): Promise<void>;
 }

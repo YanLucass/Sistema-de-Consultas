@@ -29,7 +29,7 @@ function PatientsAppointment() {
         })
     }, [token]);
 
-    console.log(appointments);
+
     return (
 
         //show individuals appointments
