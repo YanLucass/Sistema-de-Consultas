@@ -64,8 +64,12 @@ export class CreatePatientUseCase {
          throw new AppError("Esse cpf já está cadastrado no sistema", 422);
       }
 
-      //check if password matchs with confirmPassword
+      //check if phone is valid
+      if (phone.length > 11 || phone.length < 10) {
+         throw new AppError("Insira um telefone válido xx xxxxx-xxxx");
+      }
       if (password != confirmPassword) {
+         //check if password matchs with confirmPassword
          throw new AppError("As senhas devem ser iguais", 422);
       }
 
